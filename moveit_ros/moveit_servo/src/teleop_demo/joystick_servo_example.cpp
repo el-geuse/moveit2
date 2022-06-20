@@ -56,7 +56,7 @@ const std::string BASE_FRAME_ID = "panda_link0";
 
 // Enums for button names -> axis/button array index
 // For XBOX 1 controller
-/* enum Axis
+enum Axis
 {
   LEFT_STICK_X = 0,
   LEFT_STICK_Y = 1,
@@ -80,9 +80,9 @@ enum Button
   HOME = 8,
   LEFT_STICK_CLICK = 9,
   RIGHT_STICK_CLICK = 10
-}; */
+};
 
-// For THRUSTMASTER joystick
+/* // For THRUSTMASTER joystick
 enum Axis
 {
   BIG_STICK_X = 0,
@@ -97,11 +97,11 @@ enum Button
   MIDDLE_BUTTON = 1,
   BACK_BUTTON = 2,
   RIGHT_BUTTON = 3,
-};
+}; */
 
 // Some axes have offsets (e.g. the default trigger position is 1.0 not 0)
 // This will map the default values for the axes
-std::map<Axis, double> AXIS_DEFAULTS /* = { { LEFT_TRIGGER, 1.0 }, { RIGHT_TRIGGER, 1.0 } } */;
+std::map<Axis, double> AXIS_DEFAULTS = { { LEFT_TRIGGER, 1.0 }, { RIGHT_TRIGGER, 1.0 } };
 std::map<Button, double> BUTTON_DEFAULTS;
 
 // To change controls or setup a new controller, all you should to do is change the above enums and the follow 2
@@ -113,7 +113,7 @@ std::map<Button, double> BUTTON_DEFAULTS;
  * @param joint A JointJog message to update in prep for publishing
  * @return return true if you want to publish a Twist, false if you want to publish a JointJog
  */
-/* bool convertJoyToCmd(const std::vector<float>& axes, const std::vector<int>& buttons,
+bool convertJoyToCmd(const std::vector<float>& axes, const std::vector<int>& buttons,
                      std::unique_ptr<geometry_msgs::msg::TwistStamped>& twist,
                      std::unique_ptr<control_msgs::msg::JointJog>& joint)
 {
@@ -189,9 +189,9 @@ bool convertJoyToCmd(const std::vector<float>& axes, const std::vector<int>& but
   twist->twist.angular.z = roll_positive + roll_negative;
 
   return true;
-} */
+}
 
-bool convertJoyToCmd(const std::vector<float>& axes, const std::vector<int>& buttons,
+/* bool convertJoyToCmd(const std::vector<float>& axes, const std::vector<int>& buttons,
                      std::unique_ptr<geometry_msgs::msg::TwistStamped>& twist,
                      std::unique_ptr<control_msgs::msg::JointJog>& joint)
 {
@@ -216,33 +216,30 @@ bool convertJoyToCmd(const std::vector<float>& axes, const std::vector<int>& but
 
   twist->twist.angular.y = axes[NIB_Y];
   twist->twist.angular.x = axes[NIB_X];
-
- /*  double roll_positive = buttons[RIGHT_BUMPER];
-  double roll_negative = -1 * (buttons[LEFT_BUMPER]);
-  twist->twist.angular.z = roll_positive + roll_negative; */
-
+  
   return true;
-}
+} 
+*/
 
 /** \brief // This should update the frame_to_publish_ as needed for changing command frame via controller
  * @param frame_name Set the command frame to this
  * @param buttons The vector of discrete controller button values
  */
-/* void updateCmdFrame(std::string& frame_name, const std::vector<int>& buttons)
+void updateCmdFrame(std::string& frame_name, const std::vector<int>& buttons)
 {
   if (buttons[CHANGE_VIEW] && frame_name == EEF_FRAME_ID)
     frame_name = BASE_FRAME_ID;
   else if (buttons[MENU] && frame_name == BASE_FRAME_ID)
     frame_name = EEF_FRAME_ID;
-} */
-
+}
+/* 
 void updateCmdFrame(std::string& frame_name, const std::vector<int>& buttons)
 {
   if (buttons[BACK_BUTTON] && frame_name == EEF_FRAME_ID)
     frame_name = BASE_FRAME_ID;
   else if (buttons[RIGHT_BUTTON] && frame_name == BASE_FRAME_ID)
     frame_name = EEF_FRAME_ID;
-}
+} */
 
 namespace moveit_servo
 {
